@@ -4,7 +4,12 @@ import debounce from 'lodash/debounce'
 import './SearchInput.css';
 
 export default class SearchInput extends Component {
+    handleInput = evt => {
+        console.log("What is this ? ", evt);
+        // const value = evt.target.value;
+        // this.setState({ results: value });
 
+    }
     constructor(props) {
         super(props);
 
@@ -14,12 +19,24 @@ export default class SearchInput extends Component {
             error: props.error || "",
             label: props.label || "Label"
         };
+
+        this.handleInputThrottled = debounce((val) => {
+            console.log("Whats the val? ", val);
+            this.setState({ val, error: "" });
+            }, 1000);
     }
+
+
 
     changeValue(event) {
         const value = event.target.value;
-        console.log("The new value is ", value);
+
         this.setState({ value, error: "" });
+        return debounce((val) => { console.log("Whats the val? ", val); }, 1000);
+    }
+
+    handleDebounce(value) {
+        console.log("The new value is ", value);
     }
 
     handleKeyPress(event) {
@@ -45,7 +62,8 @@ export default class SearchInput extends Component {
                     type="text"
                     value={value}
                     placeholder={label}
-                    onChange={this.changeValue.bind(this)}
+
+                    onChange={e=>{this.setState({value: e.target.value}); this.handleInputThrottled(e.target.value)}}
                     onKeyPress={this.handleKeyPress.bind(this)}
                     onFocus={() => !locked && this.setState({ active: true })}
                     onBlur={() => !locked && this.setState({ active: false })}
