@@ -1,3 +1,5 @@
+Get a podcast api key: https://www.listennotes.com/api/docs/
+
 cd theapp && npm start
 
 Create a .env file at `theapp/.env` and include:
