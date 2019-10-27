@@ -1,43 +1,38 @@
 import React, { Component } from 'react';
-import "./Background.css"
+import './Background.css';
 
 export default class Background extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    const x = process.env.REACT_APP_LISTEN_URL;
+    console.log('See the x ', x);
+    super(props);
 
-        this.state = {
-            value: props.value || ""
-        };
+    this.state = {
+      value: props.value || '',
+    };
+  }
+
+  render() {
+    let listItems;
+    if (this.props.apiResults != '') {
+      listItems = this.props.apiResults.results.map(result => (
+        <span className={'listContainer'}>
+          <li key={result.id}>
+            {result.podcast_title_original}{' '}
+            <img src={result.thumbnail} className={'imgResult'} />
+          </li>
+        </span>
+      ));
+    } else {
+      listItems = 'Start typing to start searching';
     }
 
-        componentDidMount(): void {
-            /**fetch('https://randomuser.me/api/?results=500')
-                .then(results => {
-                    return results.json();
-                })
-                .then(data => {
-                    let pictures = data.results.map((pic) => {
-                        return(
-                            <div key={pic.results}>
-                                <img src={pic.picture.medium} />
-                            </div>
-                        )
-                    })
-
-                this.setState({pictures: pictures});
-                console.log("state", this.state.pictures);
-                })**/
-            console.log("It mounted");
-        }
-
-
-    render() {
-       return (
-           <div className={"container2"}>
-               <div className={"container1"}>
-                   Hello world! {this.props.background}
-               </div>
-           </div>
-       )
-    }
+    return (
+      <div className={'container2'}>
+        <div className={'container1'}>
+          <ul>{listItems}</ul>
+        </div>
+      </div>
+    );
+  }
 }
