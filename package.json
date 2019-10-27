@@ -53,5 +53,8 @@
     "yarn.lock": [
       "git rm --cached"
     ]
+  },
+  "dependencies": {
+    "rxjs": "^6.5.3"
   }
 }
